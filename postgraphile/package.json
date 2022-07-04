@@ -1,0 +1,21 @@
+{
+  "name": "postgraphile",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
+    "postgraphile": "^4.12.11",
+    "postgraphile-plugin-connection-filter": "^2.3.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.7.1",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0"
+  }
+}
