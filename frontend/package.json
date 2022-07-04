@@ -5,20 +5,32 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx --ignore-path .gitignore src",
+    "prettier": "prettier --cache --write ./src"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.2",
+    "autoprefixer": "^10.4.7",
+    "clsx": "^1.1.1",
+    "postcss": "^8.4.14",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.3.0",
+    "tailwindcss": "^3.1.4"
   },
   "devDependencies": {
+    "@types/eslint": "^8.4.5",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@typescript-eslint/parser": "^5.30.4",
     "@vitejs/plugin-react": "^1.3.0",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1",
     "typescript": "^4.6.3",
     "vite": "^2.9.9",
-    "prettier": "^2.7.1",
-    "eslint": "^8.19.0",
-    "eslint-config-prettier": "^8.5.0"
+    "vite-plugin-eslint": "^1.6.1",
+    "vite-tsconfig-paths": "^3.4.1"
   }
 }
