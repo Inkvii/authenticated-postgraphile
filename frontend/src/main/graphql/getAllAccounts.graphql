@@ -1,0 +1,28 @@
+query {
+  account(accountId: "1") {
+      accountId,
+      name,
+      age
+  }
+}
+
+#query {
+#    transactionProduct(transactionProductId: "1") {
+#        transactionProductId
+#        transaction {
+#            createdDatetime,
+#            transactionProducts {
+#                nodes {
+#                    productPrice {
+#                       price
+#                        product {
+#                            name
+#                            category
+#                            description
+#                        }
+#                    },
+#                }
+#            }
+#        }
+#    }
+#}

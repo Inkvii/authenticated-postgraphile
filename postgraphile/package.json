@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node ./src/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
     "postgraphile": "^4.12.11",
-    "postgraphile-plugin-connection-filter": "^2.3.0"
+    "postgraphile-plugin-connection-filter": "^2.3.0",
+    "dotenv": "^16.0.1"
   },
   "devDependencies": {
     "prettier": "^2.7.1",

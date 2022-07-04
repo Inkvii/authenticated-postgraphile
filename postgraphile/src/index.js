@@ -39,7 +39,7 @@ http
   .createServer(
     postgraphile(
       process.env.DATABASE_URL,
-      process.env.DEFAULT_SCHEMA,
+      "public",
       postgraphileOptions,
     ),
   )
