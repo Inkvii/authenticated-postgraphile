@@ -1,0 +1,7 @@
+query GetAccountById($accountId: BigInt!) {
+  account(accountId: $accountId ) {
+    accountId
+    name
+    age
+  }
+}

@@ -2,6 +2,9 @@ import http from "http"
 import { postgraphile } from "postgraphile"
 import PgSimplifyInflectorPlugin from "@graphile-contrib/pg-simplify-inflector"
 import ConnectionFilterPlugin from "postgraphile-plugin-connection-filter"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 export const postgraphileOptions = {
   subscriptions: true,

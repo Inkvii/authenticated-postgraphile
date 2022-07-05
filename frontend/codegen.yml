@@ -1,12 +1,19 @@
 overwrite: true
 schema: "http://localhost:5000/graphql"
-#documents: ./graphql/query/**/*.graphql
+documents: ./src/main/graphql/**/*.graphql
 generates:
-  ./graphql/types.d.ts:
+  ./src/generated/graphql/types.ts:
     plugins:
       - typescript
       - typescript-operations
+      - typescript-react-query
 #      - typescript-react-apollo
+    config:
+      fetcher:
+        endpoint: "http://localhost:5000/graphql"
+        fetchParams:
+          headers:
+            Content-Type: application/json
 
   ./graphql.schema.json:
     plugins:
