@@ -39,5 +39,3 @@ function Title(props: { className?: string }) {
     </div>
   )
 }
-
-
