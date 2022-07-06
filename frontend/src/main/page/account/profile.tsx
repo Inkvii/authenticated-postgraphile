@@ -1,13 +1,14 @@
 import DefaultPageLayout from "main/component/layout/DefaultPageLayout"
-import { useGetAccountByIdQuery } from "generated/graphql/types"
+import { Account, useGetAccountByIdQuery } from "generated/graphql/types"
+import AccountInfo from "main/page/account/fragment/AccountInfo"
 
 export default function ProfilePage() {
   const account = useGetAccountByIdQuery({ accountId: "1" })
 
   return (
-    <DefaultPageLayout>
+    <DefaultPageLayout className={"p-4"}>
       <div>Hello</div>
-      <pre>{account.data && JSON.stringify(account.data, null, 2)}</pre>
+      <AccountInfo account={account.data?.account as Account} />
     </DefaultPageLayout>
   )
 }

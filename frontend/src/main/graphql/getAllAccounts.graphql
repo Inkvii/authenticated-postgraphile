@@ -1,0 +1,14 @@
+query GetAllAccounts($cursor: Cursor){
+  accounts(after: $cursor, first: 10) {
+    totalCount,
+    pageInfo {
+      hasNextPage,
+      endCursor
+    },
+    nodes {
+      accountId
+      name
+      age
+    }
+  }
+}
