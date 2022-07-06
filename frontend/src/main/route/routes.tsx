@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
 import HomePage from "main/page/home"
-import ProfilePage from "main/page/account/profile"
 import AccountsListPage from "main/page/account/accountsList"
+import AccountDetailPage from "main/page/account/accountDetail"
 
 interface Route {
   path: string
@@ -13,18 +13,18 @@ const home: Route = {
   component: <HomePage />,
 }
 
-const profile: Route = {
-  path: "/account/profile",
-  component: <ProfilePage />,
+const accountDetail: Route = {
+  path: "/account/:id",
+  component: <AccountDetailPage />,
 }
 
 const accountsList: Route = {
-  path: "/account/accountsList",
+  path: "/account/list",
   component: <AccountsListPage/>
 }
 
 export default {
   home,
-  profile,
+  accountDetail,
   accountsList
 }

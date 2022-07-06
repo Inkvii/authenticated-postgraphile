@@ -31,7 +31,7 @@ function Title(props: { className?: string }) {
         </p>
         <Link
           className={"bg-blue-600 text-white py-2 px-8 w-fit place-self-end rounded border-white border"}
-          to={routes.profile.path}
+          to={routes.accountDetail.path}
         >
           Go to profile
         </Link>
