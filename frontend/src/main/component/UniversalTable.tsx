@@ -1,15 +1,7 @@
 import { ColumnDef, flexRender, getCoreRowModel, RowData, useReactTable } from "@tanstack/react-table"
-import { useEffect, useMemo } from "react"
-import { useInView } from "react-intersection-observer"
+import { ReactNode, useMemo } from "react"
 
-export default function UniversalTable<T extends RowData>(props: {
-  data?: T[]
-  // totalCount: number
-  // pageInfo: Partial<PageInfo>
-  // setCursor: (cursor: string | null) => void
-  fetchNextPage: () => void
-  hasNextPage: boolean
-}) {
+export default function UniversalTable<T extends RowData>(props: { data?: T[]; children: ReactNode }) {
   if (!props.data || props.data.length === 0) {
     return null
   }
@@ -38,15 +30,6 @@ export default function UniversalTable<T extends RowData>(props: {
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   })
-
-  const { ref, inView } = useInView({ threshold: 0.5 })
-
-  useEffect(() => {
-    if (inView) {
-      console.log("Is in view, fetching")
-      props.fetchNextPage()
-    }
-  }, [inView])
 
   return (
     <div className={"flex flex-col"}>
@@ -77,16 +60,7 @@ export default function UniversalTable<T extends RowData>(props: {
           ))}
         </tbody>
       </table>
-      <button
-        className={"bg-green-600 border border-white rounded text-white px-4 p-2 disabled:bg-gray-400 m-auto w-fit"}
-        ref={ref}
-        disabled={!props.hasNextPage}
-        onClick={async () => {
-          await props.fetchNextPage()
-        }}
-      >
-        Next page
-      </button>
+      {props.children}
     </div>
   )
 }

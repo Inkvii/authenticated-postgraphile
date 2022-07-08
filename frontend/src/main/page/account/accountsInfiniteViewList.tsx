@@ -1,6 +1,7 @@
 import DefaultPageLayout from "main/component/layout/DefaultPageLayout"
 import { useInfiniteGetAllAccountsQuery } from "generated/graphql/types"
 import UniversalTable from "main/component/UniversalTable"
+import InfiniteFooter from "main/component/universalTable/fragment/InfiniteFooter"
 
 export default function AccountsInfiniteViewListPage() {
   const accountsList = useInfiniteGetAllAccountsQuery(
@@ -19,11 +20,9 @@ export default function AccountsInfiniteViewListPage() {
   return (
     <DefaultPageLayout className={"p-8"}>
       {accountsList.data?.pages.flatMap((page) => page.accounts?.nodes) && (
-        <UniversalTable
-          data={accountsList.data.pages.flatMap((page) => page.accounts!.nodes)}
-          fetchNextPage={accountsList.fetchNextPage}
-          hasNextPage={accountsList.hasNextPage ?? false}
-        />
+        <UniversalTable data={accountsList.data.pages.flatMap((page) => page.accounts!.nodes)}>
+          <InfiniteFooter fetchNextPage={accountsList.fetchNextPage} hasNextPage={accountsList.hasNextPage ?? false} />
+        </UniversalTable>
       )}
     </DefaultPageLayout>
   )
