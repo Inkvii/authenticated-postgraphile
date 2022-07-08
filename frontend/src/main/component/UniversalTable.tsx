@@ -1,32 +1,14 @@
-import DefaultPageLayout from "main/component/layout/DefaultPageLayout"
-import { useMemo, useState } from "react"
 import { ColumnDef, flexRender, getCoreRowModel, RowData, useReactTable } from "@tanstack/react-table"
-import { PageInfo, useGetAllAccountsQuery } from "generated/graphql/types"
+import { useEffect, useMemo } from "react"
+import { useInView } from "react-intersection-observer"
 
-export default function AccountsListPage() {
-  const [cursor, setCursor] = useState<null | string>(null)
-
-  const accountsList = useGetAllAccountsQuery({ cursor })
-
-  return (
-    <DefaultPageLayout className={"p-8"}>
-      {accountsList.data?.accounts && (
-        <UniversalTable
-          data={accountsList.data.accounts?.nodes}
-          pageInfo={accountsList.data.accounts.pageInfo}
-          setCursor={setCursor}
-          totalCount={accountsList.data.accounts.totalCount ?? 0}
-        />
-      )}
-    </DefaultPageLayout>
-  )
-}
-
-function UniversalTable<T extends RowData>(props: {
+export default function UniversalTable<T extends RowData>(props: {
   data?: T[]
-  totalCount: number
-  pageInfo: Partial<PageInfo>
-  setCursor: (cursor: string | null) => void
+  // totalCount: number
+  // pageInfo: Partial<PageInfo>
+  // setCursor: (cursor: string | null) => void
+  fetchNextPage: () => void
+  hasNextPage: boolean
 }) {
   if (!props.data || props.data.length === 0) {
     return null
@@ -57,8 +39,17 @@ function UniversalTable<T extends RowData>(props: {
     getCoreRowModel: getCoreRowModel(),
   })
 
+  const { ref, inView } = useInView({ threshold: 0.5 })
+
+  useEffect(() => {
+    if (inView) {
+      console.log("Is in view, fetching")
+      props.fetchNextPage()
+    }
+  }, [inView])
+
   return (
-    <div>
+    <div className={"flex flex-col"}>
       <table className={"table table-auto w-full"}>
         <thead>
           {table.getHeaderGroups().map((group) => (
@@ -72,7 +63,7 @@ function UniversalTable<T extends RowData>(props: {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
+          {table.getRowModel().rows.map((row, index) => (
             <tr
               key={row.id}
               className={"odd:bg-blue-100 even:bg-blue-200 hover:brightness-125 hover:cursor-pointer transition-all"}
@@ -86,21 +77,16 @@ function UniversalTable<T extends RowData>(props: {
           ))}
         </tbody>
       </table>
-      <div className={"flex gap-4 bg-blue-400 text-white font-semibold px-4 py-2 justify-between items-center"}>
-        <div className={"flex gap-4"}>
-          <p>Total count:</p>
-          <p>{props.totalCount}</p>
-        </div>
-        <button
-          className={"bg-blue-600 border border-white rounded text-white px-4 p-2 disabled:bg-gray-400"}
-          disabled={!props.pageInfo.hasNextPage}
-          onClick={() => {
-            props.setCursor(props?.pageInfo.endCursor)
-          }}
-        >
-          Next page
-        </button>
-      </div>
+      <button
+        className={"bg-green-600 border border-white rounded text-white px-4 p-2 disabled:bg-gray-400 m-auto w-fit"}
+        ref={ref}
+        disabled={!props.hasNextPage}
+        onClick={async () => {
+          await props.fetchNextPage()
+        }}
+      >
+        Next page
+      </button>
     </div>
   )
 }

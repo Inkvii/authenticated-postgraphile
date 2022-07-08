@@ -9,6 +9,7 @@ generates:
       - typescript-react-query
 #      - typescript-react-apollo
     config:
+      addInfiniteQuery: true
       fetcher:
         endpoint: "http://localhost:5000/graphql"
         fetchParams:

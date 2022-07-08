@@ -1,7 +1,8 @@
 import { ReactElement } from "react"
 import HomePage from "main/page/home"
-import AccountsListPage from "main/page/account/accountsList"
 import AccountDetailPage from "main/page/account/accountDetail"
+import AccountsPaginatedViewListPage from "main/page/account/accountsPaginatedViewList"
+import AccountsInfiniteViewListPage from "main/page/account/accountsInfiniteViewList"
 
 interface Route {
   path: string
@@ -18,13 +19,18 @@ const accountDetail: Route = {
   component: <AccountDetailPage />,
 }
 
-const accountsList: Route = {
-  path: "/account/list",
-  component: <AccountsListPage/>
+const accountsInfiniteList: Route = {
+  path: "/account/list/infinite",
+  component: <AccountsInfiniteViewListPage/>
+}
+const accountsPaginatedList: Route = {
+  path: "/account/list/paginated",
+  component: <AccountsPaginatedViewListPage/>
 }
 
 export default {
   home,
   accountDetail,
-  accountsList
+  accountsInfiniteList,
+  accountsPaginatedList
 }
