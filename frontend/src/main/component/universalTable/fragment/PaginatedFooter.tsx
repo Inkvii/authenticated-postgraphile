@@ -34,13 +34,27 @@ function Pagination(props: {
   currentPageNumber: number
   setCurrentPageNumber: (cursor: number) => void
 }) {
+  const hasPreviousPage = useMemo(() => {
+    return props.currentPageNumber > 0
+  }, [props.currentPageNumber])
+
+  const hasNextPage = useMemo(() => {
+    return props.currentPageNumber < props.numberOfPages - 1
+  }, [props.currentPageNumber, props.numberOfPages])
 
   return (
     <div className={"flex gap-1 items-center justify-center w-fit px-8 py-2 m-auto"}>
+      <button
+        disabled={!hasPreviousPage}
+        className={clsx("w-8 h-8", "text-center font-light text-md", "rounded border shadow", "hover:brightness-110", "disabled:bg-gray-300 disabled:hover:brightness-100 disabled:cursor-not-allowed")}
+        onClick={() => hasPreviousPage && props.setCurrentPageNumber(props.currentPageNumber - 1)}
+      >
+        &lt;
+      </button>
       {range(1, props.numberOfPages + 1).map((page) => {
         return (
           <button
-            key={"page-"+page}
+            key={"page-" + page}
             className={clsx(
               "w-8 h-8",
               "text-center font-light text-md",
@@ -54,6 +68,13 @@ function Pagination(props: {
           </button>
         )
       })}
+      <button
+        disabled={!hasNextPage}
+        className={clsx("w-8 h-8", "text-center font-light text-md", "rounded border shadow", "hover:brightness-110", "disabled:bg-gray-300 disabled:hover:brightness-100 disabled:cursor-not-allowed")}
+        onClick={() => hasNextPage && props.setCurrentPageNumber(props.currentPageNumber + 1)}
+      >
+        &gt;
+      </button>
     </div>
   )
 }
