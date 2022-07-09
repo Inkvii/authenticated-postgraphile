@@ -19,6 +19,7 @@ export default function AccountsPaginatedViewListPage() {
             countPerPage={countPerPage}
             currentOffset={offset}
             setCurrentOffset={setOffset}
+            setCountPerPage={setCountPerPage}
           />
         </UniversalTable>
       )}
