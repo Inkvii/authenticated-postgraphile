@@ -1,5 +1,5 @@
-query GetAllAccounts($cursor: Cursor){
-  accounts(after: $cursor, first: 10) {
+query GetAllAccounts($cursor: Cursor, $countPerPage: Int = 10, $offset: Int){
+  accounts(after: $cursor, first: $countPerPage, offset: $offset) {
     totalCount,
     pageInfo {
       hasNextPage,
