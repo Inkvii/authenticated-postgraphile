@@ -1,10 +1,21 @@
 import DefaultPageLayout from "main/component/layout/DefaultPageLayout"
 import { Link } from "react-router-dom"
 import routes from "main/route/routes"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { auth } from "main/App"
 
 export default function HomePage() {
+  const [user, loading, error] = useAuthState(auth)
+
   return (
     <DefaultPageLayout header={<Title />}>
+      <div className={"flex justify-center gap-4 p-4"}>
+        {!user && (
+          <Link to={routes.login.path} className={"bg-green-700 text-white rounded py-2 px-4"}>
+            Login
+          </Link>
+        )}
+      </div>
       <div className={"columns-3 p-8"}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet at beatae dolore dolorum eaque eius eos eum harum
         ipsam ipsum laboriosam libero magnam natus necessitatibus officia omnis, praesentium provident quae quisquam
@@ -31,9 +42,9 @@ function Title(props: { className?: string }) {
         </p>
         <Link
           className={"bg-blue-600 text-white py-2 px-8 w-fit place-self-end rounded border-white border"}
-          to={routes.accountDetail.path}
+          to={routes.dashboard.path}
         >
-          Go to profile
+          Go to dashboard
         </Link>
       </div>
     </div>
