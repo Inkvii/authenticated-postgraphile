@@ -5,6 +5,7 @@ import AccountsPaginatedViewListPage from "main/page/account/accountsPaginatedVi
 import AccountsInfiniteViewListPage from "main/page/account/accountsInfiniteViewList"
 import LoginPage from "main/page/auth/login"
 import DashboardPage from "main/page/dashboard"
+import RegisterPage from "main/page/auth/register"
 
 export interface Route {
   path: string
@@ -41,6 +42,12 @@ const login: Route = {
   authenticated: false
 }
 
+const register: Route = {
+  path: "/auth/register",
+  component: <RegisterPage/>,
+  authenticated: false
+}
+
 const dashboard: Route = {
   path: "/dashboard",
   component: <DashboardPage/>,
@@ -53,5 +60,6 @@ export default {
   accountDetail,
   accountsInfiniteList,
   accountsPaginatedList,
-  login
+  login,
+  register
 }
