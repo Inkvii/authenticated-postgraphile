@@ -6,38 +6,45 @@ import AccountsInfiniteViewListPage from "main/page/account/accountsInfiniteView
 import LoginPage from "main/page/auth/login"
 import DashboardPage from "main/page/dashboard"
 
-interface Route {
+export interface Route {
   path: string
   component: ReactElement
+  authenticated: boolean
 }
 
 const home: Route = {
   path: "/",
   component: <HomePage />,
+  authenticated: false
 }
 
 const accountDetail: Route = {
   path: "/account/:id",
   component: <AccountDetailPage />,
+  authenticated: true
 }
 
 const accountsInfiniteList: Route = {
   path: "/account/list/infinite",
-  component: <AccountsInfiniteViewListPage/>
+  component: <AccountsInfiniteViewListPage/>,
+  authenticated: true
 }
 const accountsPaginatedList: Route = {
   path: "/account/list/paginated",
-  component: <AccountsPaginatedViewListPage/>
+  component: <AccountsPaginatedViewListPage/>,
+  authenticated: true
 }
 
 const login: Route = {
   path: "/auth/login",
-  component: <LoginPage/>
+  component: <LoginPage/>,
+  authenticated: false
 }
 
 const dashboard: Route = {
   path: "/dashboard",
-  component: <DashboardPage/>
+  component: <DashboardPage/>,
+  authenticated: true
 }
 
 export default {

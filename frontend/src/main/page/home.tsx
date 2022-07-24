@@ -1,8 +1,8 @@
 import DefaultPageLayout from "main/component/layout/DefaultPageLayout"
 import { Link } from "react-router-dom"
-import routes from "main/route/routes"
+import routes from "main/router/routes"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "main/App"
+import { auth } from "main/router/Authenticator"
 
 export default function HomePage() {
   const [user, loading, error] = useAuthState(auth)

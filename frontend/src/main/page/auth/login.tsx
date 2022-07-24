@@ -1,10 +1,11 @@
 import { signInWithRedirect, signOut } from "firebase/auth"
 import firebase from "firebase/compat"
-import { auth } from "main/App"
+
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useNavigate } from "react-router-dom"
-import routes from "main/route/routes"
+import routes from "main/router/routes"
 import { useEffect } from "react"
+import { auth } from "main/router/Authenticator"
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider
 
 const googleProvider = new GoogleAuthProvider()

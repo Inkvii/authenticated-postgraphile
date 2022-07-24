@@ -1,8 +1,9 @@
 import DefaultPageLayout from "main/component/layout/DefaultPageLayout"
-import routes from "main/route/routes"
+import routes from "main/router/routes"
 import { Link } from "react-router-dom"
-import { auth } from "main/App"
+
 import { signOut } from "firebase/auth"
+import { auth } from "main/router/Authenticator"
 
 export default function DashboardPage() {
   return (
@@ -11,13 +12,22 @@ export default function DashboardPage() {
         <h1 className={"text-4xl"}>Dashboard</h1>
       </div>
       <div className={"flex gap-4"}>
-        <Link className={"bg-blue-700 text-white rounded py-2 px-4"} to={routes.home.path}>Home</Link>
-        <Link className={"bg-blue-700 text-white rounded py-2 px-4"} to={routes.login.path}>Login</Link>
-        <Link className={"bg-blue-700 text-white rounded py-2 px-4"} to={routes.accountsPaginatedList.path}>Paginated list</Link>
-        <Link className={"bg-blue-700 text-white rounded py-2 px-4"} to={routes.accountsInfiniteList.path}>Infinite list</Link>
-        <button className={"bg-gray-400 rounded py-2 px-4"} onClick={() => signOut(auth)}>Sign out</button>
-
+        <Link className={"bg-blue-700 text-white rounded py-2 px-4"} to={routes.home.path}>
+          Home
+        </Link>
+        <Link className={"bg-blue-700 text-white rounded py-2 px-4"} to={routes.login.path}>
+          Login
+        </Link>
+        <Link className={"bg-blue-700 text-white rounded py-2 px-4"} to={routes.accountsPaginatedList.path}>
+          Paginated list
+        </Link>
+        <Link className={"bg-blue-700 text-white rounded py-2 px-4"} to={routes.accountsInfiniteList.path}>
+          Infinite list
+        </Link>
+        <button className={"bg-gray-400 rounded py-2 px-4"} onClick={() => signOut(auth)}>
+          Sign out
+        </button>
       </div>
     </DefaultPageLayout>
-    )
+  )
 }
