@@ -10,13 +10,20 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Authenticator>
-          <Routes>
-            {Object.values(routes).map((route) => (
-              <Route key={route.path} path={route.path} element={route.component} />
-            ))}
-          </Routes>
-        </Authenticator>
+        <Routes>
+          {Object.values(routes).map((route) => {
+            if (route.authenticated) {
+              return (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={<Authenticator route={route}>{route.component}</Authenticator>}
+                />
+              )
+            }
+            return <Route key={route.path} path={route.path} element={route.component} />
+          })}
+        </Routes>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

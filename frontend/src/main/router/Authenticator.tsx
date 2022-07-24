@@ -3,8 +3,7 @@ import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useNavigate } from "react-router-dom"
-import useMatchedRoutes from "main/hooks/useMatchedRoutes"
-import routes from "main/router/routes"
+import routes, { Route } from "main/router/routes"
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -17,26 +16,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 
-export default function Authenticator(props: { children: ReactElement }) {
+
+export default function Authenticator(props: { route: Route; children: ReactElement }) {
   const [user, loading, error] = useAuthState(auth)
 
-  const matchedRoutes = useMatchedRoutes()
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log("Triggered Authenticator on paths: ", matchedRoutes)
+    console.log("Triggered Authenticator on paths: ", props.route)
 
-    if (matchedRoutes.length === 0) {
-      console.warn("No matched routes found for current location")
-      return
+    if (props.route.authenticated && !loading && !user) {
+      navigate(routes.login.path, { replace: true })
     }
+  }, [!!user, props.route, loading])
 
-    if (matchedRoutes[0].authenticated && !loading && !user) {
-      navigate(routes.login.path, {replace: true})
-    }
-
-  }, [!!user, matchedRoutes])
-
+  if (loading || !user) {
+    return <div>Loading...</div>
+  }
 
   return <>{props.children}</>
 }
