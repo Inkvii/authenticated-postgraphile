@@ -3,7 +3,7 @@
   "useTabs": false,
   "tabWidth": 2,
   "bracketSpacing": true,
-  "printWidth": 140,
+  "printWidth": 120,
   "semi": false,
   "jsxSingleQuote": false,
   "bracketSameLine": false,

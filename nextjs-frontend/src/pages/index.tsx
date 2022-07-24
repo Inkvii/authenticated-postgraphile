@@ -1,6 +1,6 @@
 export default function HomePage() {
   return (
-    <div>
+    <div className={"bg-gray-500 text-white"}>
       Hello world
     </div>
   )
