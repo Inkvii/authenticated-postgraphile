@@ -1,4 +1,10 @@
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithRedirect, signOut } from "firebase/auth"
+import {
+  browserLocalPersistence,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithRedirect,
+  signOut,
+} from "firebase/auth"
 
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useEffect, useState } from "react"
@@ -6,8 +12,6 @@ import { useRouter } from "next/router"
 import { auth } from "components/Firebase"
 import routes from "router/routes"
 import Link from "next/link"
-
-const googleProvider = new GoogleAuthProvider()
 
 export default function LoginPage() {
   const [user, loading, error] = useAuthState(auth)
@@ -27,7 +31,11 @@ export default function LoginPage() {
     <div className={"flex flex-col p-4 gap-4"}>
       <button
         className={"bg-green-700 text-white py-2 px-4 rounded"}
-        onClick={() => signInWithRedirect(auth, googleProvider)}
+        onClick={async () => {
+          await auth.setPersistence(browserLocalPersistence)
+          const googleProvider = new GoogleAuthProvider()
+          await signInWithRedirect(auth, googleProvider)
+        }}
       >
         Google provider
       </button>

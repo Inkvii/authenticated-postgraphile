@@ -41,25 +41,24 @@ export default function DashboardPage(props: { uid: string; email: string }) {
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+
   try {
     const cookies = nookies.get(context)
     const { uid, email } = await firebaseAdmin.auth().verifyIdToken(cookies.token)
-
     return {
       props: {
         uid,
-        email,
+        email
       },
     }
   } catch (err) {
     console.error("Get server side props error " + err)
-    // either the `token` cookie didn't exist
-    // or token verification failed
-    // either way: redirect to the login page
-    context.res.writeHead(302, { Location: routes.login.path })
-    context.res.end()
     return {
       props: {} as never,
+      redirect: {
+        destination: routes.login.path,
+        permanent: false
+      }
     }
   }
 }
