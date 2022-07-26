@@ -34,6 +34,9 @@ export default function LoginPage() {
         onClick={async () => {
           await auth.setPersistence(browserLocalPersistence)
           const googleProvider = new GoogleAuthProvider()
+          googleProvider.setCustomParameters({
+            prompt: "select_account",
+          })
           await signInWithRedirect(auth, googleProvider)
         }}
       >

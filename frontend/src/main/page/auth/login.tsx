@@ -9,6 +9,9 @@ import { auth } from "main/router/Authenticator"
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider
 
 const googleProvider = new GoogleAuthProvider()
+googleProvider.setCustomParameters({
+  prompt: "select_account"
+})
 
 export default function LoginPage() {
   const [user, loading, error] = useAuthState(auth)
