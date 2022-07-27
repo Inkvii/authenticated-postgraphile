@@ -1,6 +1,7 @@
 import nookies from "nookies"
 import { initializeApp } from "@firebase/app"
 import { getAuth } from "@firebase/auth"
+import { CookieSerializeOptions } from "next/dist/server/web/types"
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,10 +17,10 @@ export const auth = getAuth(app)
 
 auth.onIdTokenChanged(async (user) => {
   if (!user) {
-    nookies.set(undefined, "token", "", { path: "/" })
+    nookies.set(undefined, "token", "", { path: "/", secure: true  } as CookieSerializeOptions)
   } else {
     const token = await user.getIdToken()
-    nookies.set(undefined, "token", token, { path: "/" })
+    nookies.set(undefined, "token", token, { path: "/", secure: true } as CookieSerializeOptions)
   }
 })
 

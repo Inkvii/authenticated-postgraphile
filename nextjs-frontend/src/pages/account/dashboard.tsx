@@ -6,6 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import nookies from "nookies"
 import { GetServerSidePropsContext } from "next"
 import { firebaseAdmin } from "backend/firebaseAdmin"
+import { generateCsrfCookie } from "backend/csrf"
 
 export default function DashboardPage(props: { uid: string; email: string }) {
   const [user, loading, error] = useAuthState(auth)
@@ -36,19 +37,46 @@ export default function DashboardPage(props: { uid: string; email: string }) {
           Sign out
         </button>
       </div>
+      <div className={"grid grid-cols-2 gap-4"}>
+        <div>
+          Click me to test csrf without header
+          <button
+            className={"bg-yellow-600 text-white rounded py-2 px-4"}
+            onClick={async () => {
+              generateCsrfCookie()
+              const res = await fetch("/api/hello", { method: "POST" })
+              console.log(res.json())
+            }}
+          >
+            No CSRF clicker
+          </button>
+        </div>
+        <div>
+          Click me to test proper csrf
+          <button
+            className={"bg-yellow-500 text-white rounded py-2 px-4"}
+            onClick={async () => {
+              const csrf = generateCsrfCookie()
+              const res = await fetch("/api/hello", { method: "POST", headers: { "xsrf-token": csrf } })
+              console.log(res.json())
+            }}
+          >
+            CSRF clicker
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-
   try {
     const cookies = nookies.get(context)
     const { uid, email } = await firebaseAdmin.auth().verifyIdToken(cookies.token)
     return {
       props: {
         uid,
-        email
+        email,
       },
     }
   } catch (err) {
@@ -57,8 +85,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       props: {} as never,
       redirect: {
         destination: routes.login.path,
-        permanent: false
-      }
+        permanent: false,
+      },
     }
   }
 }
